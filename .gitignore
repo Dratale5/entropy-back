@@ -1,6 +1,9 @@
 #Ignore docker
 docker-compose.yml
 
+#Ignore config
+/config/config.yaml
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
