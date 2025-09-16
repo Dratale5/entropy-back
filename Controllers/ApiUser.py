@@ -1,6 +1,7 @@
 import json
 from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
 from Classes.Auth import Auth
+from Classes.Entropy import Entropy
 
 UserBP = Blueprint("UserBP", "UserBP")
 
@@ -74,7 +75,7 @@ def deconnexion():
         type: string
         required: true
         description: Nom de l'utilisateur
-      - in: formData
+      - in: header
         name: token
         type: string
         required: true
@@ -97,7 +98,7 @@ def deconnexion():
         return current_app.response_class(status=204, mimetype="application/json")
 
     username = request.form.get("username", None)
-    token = request.form.get("token", None)
+    token = request.headers.get("Authorization", "").split("Bearer ")[-1]
 
     if(username in ["",None] or token in ["",None]):
         leJson["message"] = "Informations partiellement manquantes."
@@ -128,11 +129,11 @@ def verifiertoken():
         type: string
         required: true
         description: Nom de l'utilisateur
-      - in: formData
-        name: token
+      - in: header
+        name: Authorization
         type: string
         required: true
-        description: Token de l'utilisateur
+        description: "Token de l'utilisateur"
     responses:
       200:
         description: Résultat de vérification
@@ -151,7 +152,7 @@ def verifiertoken():
         return current_app.response_class(status=204, mimetype="application/json")
 
     username = request.form.get("username", None)
-    token = request.form.get("token", None)
+    token = request.headers.get("Authorization", "").split("Bearer ")[-1]
 
     if(username in ["",None] or token in ["",None]):
         leJson["message"] = "Informations partiellement manquantes."
@@ -199,6 +200,9 @@ def creercompte():
             message:
               type: string
               example: "Compte créé"
+            entropy:
+                type: integer
+                example: 28
     """
     leJson:dict = {}
     if not request.form:
@@ -223,4 +227,5 @@ def creercompte():
     
     leJson["message"] = "Compte créé"
     leJson["statut"] = 1
+    leJson["entropy"] = resultat[2]
     return current_app.response_class(response=json.dumps(leJson), status=200, mimetype="application/json")
