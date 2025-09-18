@@ -76,10 +76,10 @@ def deconnexion():
         required: true
         description: Nom de l'utilisateur
       - in: header
-        name: token
+        name: Authorization
         type: string
         required: true
-        description: Token de l'utilisateur
+        description: "Token de l'utilisateur"
     responses:
       200:
         description: Résultat de la tentative de déconnexion
