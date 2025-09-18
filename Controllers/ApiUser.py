@@ -195,8 +195,8 @@ def creercompte():
           type: object
           properties:
             statut:
-              type: integer
-              example: 1
+              type: float
+              example: 2.94770277922009
             message:
               type: string
               example: "Compte créé"

@@ -2,7 +2,7 @@ from secrets import token_hex
 from hashlib import sha512
 from flask import current_app, request
 import json
-
+from Classes.Entropy import Entropy
 from db import userDb
 from Models.User import User
 
@@ -84,19 +84,14 @@ class Auth:
                 userDb.session.add(newUser)
                 userDb.session.commit()
                 
-                return (True, "Compte créé.")
+                return (True, "Compte créé.", Entropy.calculerEntropy(password))
             
         except Exception as e:
             current_app.logger.error(str(e))
-            return (False, "Une erreur est survenue.")
+            return (False, "Une erreur est survenue.", 0)
         except Exception as e:
             current_app.logger.error(str(e))
-            return (False, "Une erreur est survenue.")
-
-        # enregistrement de l'utilisateur + retour
-        mdpHash:str = sha512(password.encode("utf-8")).hexdigest()
-        userDb.rpush(str(username), mdpHash, "")
-        return (True, "Compte créé.")
+            return (False, "Une erreur est survenue.", 0)
     
 
 
