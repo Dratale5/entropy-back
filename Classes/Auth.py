@@ -84,14 +84,14 @@ class Auth:
                 userDb.session.add(newUser)
                 userDb.session.commit()
                 
-                return (True, "Compte créé.", Entropy.calculerEntropy(password))
+                return (True, "Compte créé.", Entropy.calculerEntropy(password), Entropy.calculerRedondance(password))
             
         except Exception as e:
             current_app.logger.error(str(e))
-            return (False, "Une erreur est survenue.", 0)
+            return (False, "Une erreur est survenue.", 0,0)
         except Exception as e:
             current_app.logger.error(str(e))
-            return (False, "Une erreur est survenue.", 0)
+            return (False, "Une erreur est survenue.", 0,0)
     
 
 

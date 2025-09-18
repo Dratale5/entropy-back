@@ -195,14 +195,17 @@ def creercompte():
           type: object
           properties:
             statut:
-              type: float
-              example: 2.94770277922009
+              type: integer
+              example: 1
             message:
               type: string
               example: "Compte créé"
             entropy:
-                type: integer
-                example: 28
+                type: float
+                example: 2.94770277922009
+            redondance:
+              type: float
+              example: 2
     """
     leJson:dict = {}
     if not request.form:
@@ -228,4 +231,5 @@ def creercompte():
     leJson["message"] = "Compte créé"
     leJson["statut"] = 1
     leJson["entropy"] = resultat[2]
+    leJson["redondance"] = resultat[3]
     return current_app.response_class(response=json.dumps(leJson), status=200, mimetype="application/json")

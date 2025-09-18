@@ -1,4 +1,5 @@
 import math
+from collections import Counter
 
 class Entropy:
     @staticmethod
@@ -27,4 +28,23 @@ class Entropy:
         entropy = -sum(p * math.log2(p) for p in probabilities)
 
         return entropy
+    
+
+    def calculerRedondance(texte):
+        counts = Counter(texte)
+        total = len(texte)
+        N = len(counts)
+        
+        if N == 1:
+            # If only 1 unique symbol, redundancy is maximal (1)
+            return 1.0
+        
+        # Calculating entropy
+        H = -sum((freq/total) * math.log2(freq/total) for freq in counts.values())
+        
+        # Calculating redundancy
+        R = 1 - H / math.log2(N)
+        
+        return R
+
     
