@@ -2,7 +2,7 @@ import yaml
 from flask import Flask
 
 class Config:
-    def __init__(self, app:Flask):
+    def __init__(self):
         # Reading config file
         with open("./Config/config.yaml", "r") as fichierConfig:
            
@@ -15,5 +15,11 @@ class Config:
             self.PostgresUsername = PostgresConfig.get("username", "")
             self.PostgresPassword = PostgresConfig.get("password", "")
 
+            SecurityConfig = dict(config.get("Security", {}))
+            self.MinEntropy = SecurityConfig.get("MinEntropy", "")
+            self.MaxRedondance = SecurityConfig.get("MaxRedondance", "")
+
 
             fichierConfig.close()
+
+config:Config = Config()

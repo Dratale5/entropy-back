@@ -4,6 +4,7 @@ from flask import current_app, request
 import json
 from Classes.Entropy import Entropy
 from db import userDb
+from Classes.CConfig import config
 from Models.User import User
 
 
@@ -77,6 +78,13 @@ class Auth:
                 unUser = userDb.session.query(User).filter(User.username==username).first()
                 if(unUser != None): return (False, "Cet identifiant est déjà utilisé.")
 
+                entropy = Entropy.calculerEntropy(password)
+
+                if(entropy < config.MinEntropy): return (False, "La valeur d'entropie est trop faible (" + str(entropy) + "). Elle doit être au moins égale à " + str(config.MinEntropy) + ".")
+
+                redondance = Entropy.calculerRedondance(password)
+                if(redondance > config.MaxRedondance): return (False, "La valeur de redondance est trop haute (" + str(redondance) + "). Elle doit être au plus égale à " + str(config.MaxRedondance) + ".")
+                
                 newUser = User()
                 newUser.username = username
                 newUser.passwordHash = mdpHash
@@ -84,7 +92,7 @@ class Auth:
                 userDb.session.add(newUser)
                 userDb.session.commit()
                 
-                return (True, "Compte créé.", Entropy.calculerEntropy(password), Entropy.calculerRedondance(password))
+                return (True, "Compte créé.", entropy, redondance)
             
         except Exception as e:
             current_app.logger.error(str(e))
@@ -102,7 +110,7 @@ class Auth:
                 
                 userId = username = request.headers.get("userId")
                 username = request.headers.get("username")
-                token = request.headers.get("token")
+                token = request.headers.get("Authorization", "").split("Bearer ")[-1]
 
                 unUser = userDb.session.query(User).filter(User.username==username,User.token==token).first()
 

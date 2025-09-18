@@ -9,9 +9,10 @@ class Entropy:
         Entropy is calculated using the formula:
         H(X) = - Σ (p(x) * log2(p(x)))
         where p(x) is the probability of character x in the word.
-        It will give a value between 1 and 5, where :
+        It will give a value, where :
         - 1 : very weak (e.g., "aaaaaa")
         - 5 : very strong (e.g., "1¾÷6f%æ=Âæ:hßª©gzN")
+        Note : It can go higher than 5 for very long and complex passwords.
         """
         if not word:
             return 0.0

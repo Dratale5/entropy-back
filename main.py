@@ -3,7 +3,7 @@ from flasgger import Swagger
 from os import path
 from secrets import token_hex
 import logging
-from Classes.CConfig import Config
+from Classes.CConfig import config
 
 from db import userDb
 
@@ -15,10 +15,9 @@ if(__name__ == "__main__"):
 
     # registering controllers
     from Controllers.ApiUser import UserBP
+    from Controllers.ApiDashBoard import DashBoardBP
+    app.register_blueprint(DashBoardBP)
     app.register_blueprint(UserBP)
-
-    # Importing config
-    config = Config(app)
 
     # Database Parameters
     param_bdd = f"postgresql+pg8000://{config.PostgresUsername}:{config.PostgresPassword}@{config.PostgresServer}/userDb"
@@ -33,6 +32,6 @@ if(__name__ == "__main__"):
 
     @app.get("/")
     def root(): 
-        return "ok"
+        return app.redirect("/apidocs")
     
     app.run(host='0.0.0.0', port=4999)
