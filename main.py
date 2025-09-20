@@ -18,8 +18,10 @@ if(__name__ == "__main__"):
     # registering controllers
     from Controllers.ApiUser import UserBP
     from Controllers.ApiDashBoard import DashBoardBP
+    from Controllers.ApiConfig import ConfigBP
     app.register_blueprint(DashBoardBP)
     app.register_blueprint(UserBP)
+    app.register_blueprint(ConfigBP)
 
     # Database Parameters
     param_bdd = f"postgresql+pg8000://{config.PostgresUsername}:{config.PostgresPassword}@{config.PostgresServer}/userDb"
