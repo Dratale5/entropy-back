@@ -14,6 +14,7 @@ class Config:
             self.PostgresServer = PostgresConfig.get("server", "")
             self.PostgresUsername = PostgresConfig.get("username", "")
             self.PostgresPassword = PostgresConfig.get("password", "")
+            self.PostgresDatabase = PostgresConfig.get("database","")
 
             SecurityConfig = dict(config.get("Security", {}))
             self.MinEntropy = SecurityConfig.get("MinEntropy", "")

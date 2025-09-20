@@ -24,7 +24,7 @@ if(__name__ == "__main__"):
     app.register_blueprint(ConfigBP)
 
     # Database Parameters
-    param_bdd = f"postgresql+pg8000://{config.PostgresUsername}:{config.PostgresPassword}@{config.PostgresServer}/userDb"
+    param_bdd = f"postgresql+pg8000://{config.PostgresUsername}:{config.PostgresPassword}@{config.PostgresServer}/{config.PostgresDatabase}"
     app.config['SQLALCHEMY_DATABASE_URI'] = param_bdd
     # Creating database instance
     userDb.init_app(app)
