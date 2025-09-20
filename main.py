@@ -5,7 +5,7 @@ from os import path
 from secrets import token_hex
 import logging
 from Classes.CConfig import config
-
+import os
 from db import userDb
 
 if(__name__ == "__main__"):
@@ -38,4 +38,6 @@ if(__name__ == "__main__"):
     def root(): 
         return app.redirect("/apidocs")
     
-    app.run(host='0.0.0.0', port=4999)
+    portRender = int(os.environ.get("PORT", 5000))
+
+    app.run(host='0.0.0.0', port=portRender)
