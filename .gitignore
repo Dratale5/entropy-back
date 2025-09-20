@@ -1,7 +1,3 @@
-#Ignore docker
-docker-compose.yml
-Dockerfile
-
 #Ignore config
 /config/config.yaml
 

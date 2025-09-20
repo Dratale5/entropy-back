@@ -1,0 +1,11 @@
+volumes:
+  PostVolume:
+  
+services:
+  backendservice:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: backendservice
+    ports:
+      - "4999:4999"
