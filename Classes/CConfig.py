@@ -4,7 +4,7 @@ from flask import Flask
 class Config:
     def __init__(self):
         # Reading config file
-        with open("/etc/secrets/config.yaml", "r") as fichierConfig:
+        with open("/app/config.yaml", "r") as fichierConfig:
            
             config = yaml.load(fichierConfig, Loader=yaml.FullLoader)
 
