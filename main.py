@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from flasgger import Swagger
 from os import path
 from secrets import token_hex
@@ -11,6 +12,7 @@ if(__name__ == "__main__"):
     app:Flask = Flask(import_name="app")
     app.logger.setLevel(logging.INFO)
     app.config["SECRET_KEY"] = token_hex(16)
+    cors = CORS(app) # autoriser le cors pour toutes les routes
     swagger = Swagger(app)
 
     # registering controllers
