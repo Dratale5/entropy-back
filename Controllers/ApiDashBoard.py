@@ -1,5 +1,5 @@
 import json
-from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
+from flask import Blueprint, current_app
 from Classes.Auth import Auth
 from Classes.Entropy import Entropy
 from Classes.Dash import Dash
@@ -25,18 +25,6 @@ def getAllUsers():
         type: string
         required: true
         description: "Token de l'utilisateur"
-    responses:
-      200:
-        description: Résultat de vérification
-        schema:
-          type: object
-          properties:
-            statut:
-              type: integer
-              example: 1
-            message:
-              type: string
-              example: "Le token est correct"
     """
     leJson:dict = {}
     leJson["Users"] = []
