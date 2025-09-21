@@ -1,4 +1,10 @@
 databases:
   Postgres:
-    username:
-    password:
+    server: 
+    username: 
+    password: 
+    database: 
+
+Security:
+  MinEntropy: 
+  MaxRedondance: 
